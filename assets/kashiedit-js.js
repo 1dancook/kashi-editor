@@ -1,222 +1,8 @@
-<!--
-  TODO:
-  - add more buttons
-    - erase all readings
-    - erase reading under cursor
-  - pythonize it
-    - button for auto-kana
-  - test UI on windows machine before continuing!!
-
-  -->
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-<style>
-
-#editing, #highlighting {
-  /* Both elements need the same text and space styling so they are directly on top of each other */
-  margin: 5px;
-  padding: 10px;
-  border: solid #cbd5e1 1px;
-  border-radius: 5px;
-  width: calc(50vw - 25px);
-  bottom: 11%;
-}
-
-#editing, #highlighting, #highlighting * {
-  /* Also add text styles to highlighing tokens */
-  font-size: 15pt;
-  font-family: monospace;
-  line-height: 20pt;
-  tab-size: 2;
-}
-
-
-#editing, #highlighting {
-  /* In the same place */
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-
-/* Move the textarea in front of the result */
-
-#editing {
-  z-index: 1;
-}
-#highlighting {
-  z-index: 0;
-}
-
-
-/* Make textarea almost completely transparent */
-
-#editing {
-  color: transparent;
-  background: transparent;
-  caret-color: black; /* Or choose your favourite color */
-
-}
-
-/* Can be scrolled */
-#editing, #highlighting {
-  overflow: auto;
-  /*white-space: pre-wrap;*/
-  /*white-space: pre-wrap;*/
-  white-space: pre-line;
-  word-break: break-all;
-  /*white-space: nowrap; /*Allows textarea to scroll horizontally */
-}
-
-
-
-/* No resize on textarea */
-#editing {
-  resize: none;
-}
-
-/* Paragraphs; First Image */
-* {
-  font-family: "Courier 10 Pitch", "Courier Std", Consolas, Courier, "TeX Gyre Cursor", TeXGyreCursor, "Nimbus Mono L", FreeMono, "Courier New", monospace;
-}
-p code {
-  border-radius: 2px;
-  background-color: #eee;
-  color: #111;
-  border: solid #cbd5e1 1px;
-
-}
-
-.rb-phrase {
-  background-color: #f1f5f9;
-  border-radius: 10px;
-}
-
-.rb {
-  color: #bfdbfe;
-}
-
-.rb-inner {
-  color: #2563eb;
-}
-
-.rt {
-  color: #d8b4fe;
-}
-
-.rt-inner {
-  color: #9333ea;
-}
-
-.separator {
-  color: #64748b;
-}
-
-.separator-preview {
-  display: block;
-  background-color: #f1f5f9;
-  color: #334155;
-  margin: 0;
-  margin-top: 1em;
-}
-
-rt {
-  font-size: 0.8em;
-  color: #4f46e5;
-
-
-}
-
-ruby {
-  background-color: #dbeafe;
-  border-radius: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-
-#buttons-container {
-  margin: 5px;
-  padding: 5px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 8%;
-  /* border: solid red 1px; */
-  display: flex;
-  align-items: flex-start;
-
-}
-
-#preview-container {
-  margin: 5px;
-  padding: 5px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: calc(50% - 25px);
-  border: solid #cbd5e1 1px;
-  border-radius: 5px;
-  bottom: 11%;
-  overflow:auto;
-}
-
-
-</style>
-</head>
-<body>
-  
-
-<div>
-  <textarea placeholder="歌詞エディター" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);" onchange="update(this.value);"></textarea>
-
-<!--this must not have any white space before it or
-  it will be messed up in the editor -->
-<pre id="highlighting" aria-hidden="true">
-<code class="language-html" id="highlighting-content">
-</code>
-</pre>
-</div>
-
-<div id="buttons-container">
-
-  <button id="insert-tags" onclick="insert_tags()">{rb}{rt}{/rt}{/rb}</button>
-  <!--<button id="" onclick="delete_tags()">タグを削除</button>-->
-
-  <select id="separator-select">
-    <option>バース</option>
-    <option>コーラス</option>
-    <option>ブリッジ</option>
-    <option>間奏</option>
-    <option>序奏</option>
-    <option>エンディング</option>
-  </select>
-
-  <button id="insert-sep-button" onclick="insert_sep()">入力</button>
-
-
-</div>
-
-
-<div id="preview-container">
-  <div id="preview">
-    歌詞プレビュー
-  </div>
-</div>
-
-<script>
-
 function update_preview() {
   let text = document.querySelector("#editing").value;
   
   // regex for tags
-	let ruby_start = /{rb}/g; //match {rb}
+  let ruby_start = /{rb}/g; //match {rb}
   let ruby_stop = /{\/rb}/g; // match {/rb}
   let reading_start = /{rt}/g; // match {rt}
   let reading_stop = /{\/rt}/g; // match {/rt}
@@ -227,9 +13,9 @@ function update_preview() {
   let ruby_stop_sub = '</ruby>';
   let reading_start_sub = '<rt>';
   let reading_stop_sub = '</rt>';
-    let separator_sub = '<br><p class="separator-preview">$2</p>'
+  let separator_sub = '<br><p class="separator-preview">$2</p>'
 
-	// replacements
+  // replacements
   text = text.replaceAll(separators, separator_sub)
   text = text.replaceAll(ruby_start, ruby_start_sub);
   text = text.replaceAll(ruby_stop, ruby_stop_sub);
@@ -244,19 +30,20 @@ function update_preview() {
 
 
 function insert_sep() {
-	let editor = document.querySelector("#editing");
+  let editor = document.querySelector("#editing");
   let text = editor.value;
   let separator = document.querySelector("#separator-select").value;
-  let n = prompt("何番？", 1)
+  //let n = prompt("何番？", 1)
+  let n = 1
   if (!n) {
-  	editor.focus()
+    editor.focus()
     return;
   }
   let insertion = "\n" + "---[" + separator + ":" + n + "]---\n";
   
   
   editor.focus()
-	let sel_start = editor.selectionStart;
+  let sel_start = editor.selectionStart;
   let sel_end = editor.selectionEnd;
   let beginning = text.slice(0,sel_end);
   let end = text.slice(sel_end, text.length);
@@ -270,7 +57,7 @@ function insert_tags() {
   let editor = document.querySelector("#editing");
   let text = editor.value;
   editor.focus()
-	let sel_start = editor.selectionStart;
+  let sel_start = editor.selectionStart;
   let sel_end = editor.selectionEnd;
   let selection = text.slice(sel_start, sel_end);
   let beginning = text.slice(0,sel_start);
@@ -281,11 +68,11 @@ function insert_tags() {
   // change cursor based on some logic
   // if there is a selection, go to reading spot
   if (selection.length > 0) {
-  	editor.selectionEnd = sel_end + 8
+    editor.selectionEnd = sel_end + 8
   }
   // if there is no selection, go to kanji/word spot
   if (selection.length == 0) {
-  	editor.selectionEnd = sel_start + 4
+    editor.selectionEnd = sel_start + 4
   }
 
   update(editor.value)
@@ -296,7 +83,7 @@ function highlight(text) {
   // regular expressions
   let separators = /(---\[.*?\]---\s*)/g; // match the song part separator syntax
   let ruby_phrase = /({rb}.*?{rt}.*?{\/rt}{\/rb})/g
-	let ruby_start = /{rb}/g; //match {rb}
+  let ruby_start = /{rb}/g; //match {rb}
   let ruby_stop = /{\/rb}/g; // match {/rb}
   let ruby_inner = /({rb})(.*?)({rt})/g; // match text needing ruby
   let reading_start = /{rt}/g; // match {rt}
@@ -313,10 +100,10 @@ function highlight(text) {
   let reading_start_sub = '<span class="rt">{rt}</span>';
   let reading_stop_sub = '<span class="rt">{/rt}</span>';
 
-	// replacements
+  // replacements
   text = text.replaceAll(separators, separator_sub)
   // must do the wrapping ones first
-	text = text.replaceAll(ruby_phrase, ruby_phrase_sub);
+  text = text.replaceAll(ruby_phrase, ruby_phrase_sub);
   text = text.replaceAll(ruby_inner, ruby_inner_sub);  
   text = text.replaceAll(reading_inner, reading_inner_sub);
   // then tags
@@ -378,16 +165,10 @@ function enable_shortcut_keys() {
 
   document.addEventListener('keyup', function (event) {
       if (event.ctrlKey && event.key === 'r') {
-      	insert_tags();
+        insert_tags();
       }
   });
   
 }
 
 enable_shortcut_keys();
-
-</script>
-
-
-</body>
-</html>

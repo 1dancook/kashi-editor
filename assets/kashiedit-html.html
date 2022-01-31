@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>歌詞エディター</title>
+  <link rel="stylesheet" type="text/css" href="kashiedit-css.css" media="screen" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- EDITOR -->
+<div>
+  <textarea placeholder="歌詞エディター" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);" onchange="update(this.value);"></textarea>
+
+<!--this must not have any white space before it or
+  it will be messed up in the editor -->
+<pre id="highlighting" aria-hidden="true">
+<code class="language-html" id="highlighting-content">
+</code>
+</pre>
+</div>
+
+<!--PREVIEW-->
+<div id="preview-container">
+  <div id="preview">
+    歌詞プレビュー
+  </div>
+</div>
+
+<!-- BUTTONS -->
+<div id="buttons-container" class="">
+
+  <button id="insert-tags" class="rounded-full bg-blue-600 text-white" onclick="insert_tags()">{rb}{rt}{/rt}{/rb}</button>
+  <!--<button id="" onclick="delete_tags()">タグを削除</button>-->
+
+  <select id="separator-select">
+    <option>バース</option>
+    <option>コーラス</option>
+    <option>ブリッジ</option>
+    <option>間奏</option>
+    <option>序奏</option>
+    <option>エンディング</option>
+  </select>
+
+  <input id="sep-value-input" value=1></input>
+
+  <button id="insert-sep-button" onclick="insert_sep()">入力</button>
+
+
+</div>
+
+<script src="kashiedit-js.js"></script>
+
+</body>
+</html>
