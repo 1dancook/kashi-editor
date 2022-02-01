@@ -29,10 +29,10 @@
 <!-- BUTTONS -->
 <div id="buttons-container" class="m-2 absolute bottom-0 left-0 right-0 h-10 flex justify-start gap-4">
 
-  <button id="insert-tags" class="rounded h-8 px-2 bg-gray-100 border border-gray-200 hover:bg-gray-200" onclick="insert_tags()">{rb}{rt}{/rt}{/rb}</button>
+  <button id="insert-tags" class="rounded h-8 px-2 mx-3 bg-gray-100 border border-gray-200 hover:bg-gray-200" onclick="insert_tags()">{rb}{rt}{/rt}{/rb}</button>
   <!--<button id="" onclick="delete_tags()">タグを削除</button>-->
 
-  <div>
+  <div class="mx-3">
     <select id="separator-select" class="rounded h-8 px-2 border border-gray-200">
       <option>バース</option>
       <option>コーラス</option>
@@ -46,11 +46,83 @@
 
     <button id="insert-sep-button" onclick="insert_sep()" class="rounded h-8 px-2 bg-gray-100 border border-gray-200 hover:bg-gray-200">入力</button>
   </div>
+    <button id="help-button" onclick="show_help()" class="rounded h-8 px-2 bg-gray-100 mx-3 border border-gray-200 hover:bg-gray-200">ヘルプ</button>
 
 
 </div>
 
 <script src="kashiedit-js.js"></script>
+
+
+<div id="help" class="hidden">
+<h3>(プレビュー)</h3>
+<hr class="mt-6 mb-6">
+
+<h2 class="text-xl">歌詞エディターの使い方</h2>
+<p>左のパネルを変更しすると、プレビューパネルが変更します。まだヘルプが読みたい場合、したの「ヘルプ」ボトンをクリックして下さい。</p>
+
+<div class="text-md leading-8 m-3">
+<h3 class="text-lg mt-8 border-b">OpenLPにある歌詞を編集する</h3>
+
+<ol class="list-decimal ml-8">
+<li>OpenLPにある賛美歌を編集して、「ソングエデェタ」の右の方の「全て編集」ボタンをクリックします。</li>
+<li>次の「バース編集」ウィンドウで全ての歌詞をセレクトして、コピーします。キーボードショットカットで <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+a</code> -> <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+c</code> で出来ます。</li>
+<li>OpenLPはそのまま置いてします。</li>
+<li>歌詞エディターを開きます。左のパネルにペーストします。キーボードショットカットで <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+v</code> で出来ます。</li>
+<li>歌詞を編集したら、歌詞エディターの左のパネルにある歌詞を、全てコピーします。<code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+a</code> -> <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+c</code></li>
+<li>先のOpenLPの「バース編集」にペーストします。<code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+v</code></li>
+<li>「バース編集」の「OK」ボタンをクリックして、「保存」をクリックします。</li>
+</ol>
+
+<h3 class="text-lg mt-8 border-b">歌詞エディターのキーボードショットカット</h3>
+
+<ol class="list-decimal ml-8">
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+r</code> -> 単語か漢字をセレクトしていない場合 -> カーソルのところにルビのタグ（<code class="bg-gray-200 rounded text-gray-700 px-1">{rb}{rt}{/rt}{/rb}</code>） を入れます。</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+r</code> -> 単語か漢字をセレクトしている場合 -> セレクトしている単語か漢字を <code class="bg-gray-200 rounded text-gray-700 px-1">{rb}</code> と <code class="bg-gray-200 rounded text-gray-700 px-1">{rt}</code> タグの間に入れて、読み方を早く入れるようにカーソルが読み方のところに行きます。</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+1</code> -> カーソルのところにバースの区切りを入れます。したの番号を使います。</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+2</code> -> コカーソルのところにコーラスの区切りを入れます。したの番号を使います。</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+3</code> -> ルのところにブリッジの区切りを入れます。したの番号を使います。</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+u</code> -> したの番号を上がります。</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+d</code> -> したの番号を下がります。</li>
+</ol>
+
+<h3 class="text-lg mt-8 border-b">新しい歌詞を作り方</h3>
+
+<p>こちらは歌詞の部分についてだけです。OpenLPはほかのことも必要です（アーティストとか）。</p>
+
+<ol class="list-decimal ml-8">
+<li>歌詞エディターに歌詞と区切りを入力します。ルビタグも使います。</li>
+<li>歌詞を全てコピーします。<code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+a</code> -> <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+c</code></li>
+<li>OpenLPで新しい賛美歌を作って、「ソングエデェタ」の右の方の「全て編集」ボタンをクリックします。</li>
+<li>次の「バース編集」ウィンドウでペーストします。そうしたら、「OK」ボタンをクリックして、「保存」をクリックします。</li>
+</ol>
+
+<h3 class="text-lg mt-8 border-b">早く歌詞の区切りを入れ方</h3>
+
+<p>「バース１、コーラス、バース２、バース3、ブリッジ」の例え。</p>
+<p>まず、下の番が「１」に設定します。</p>
+<p>ショットキーで早く入れます。</p>
+
+<ol class="list-decimal ml-8">
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+1</code> バース１</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+2</code> コーラス１</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+u</code> -> <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+1</code> : 番号が上がって、バース2</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+u</code> -> <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+1</code> : 番号が上がって、バース3</li>
+<li><code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+d</code> -> <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+d</code> -> <code class="bg-gray-200 rounded text-gray-700 px-1">CTRL+3</code> : 番号が2回下がって、ブリッジ</li>
+</ol>
+
+</div>
+  
+</div>
+
+<script>
+  function show_help() {
+    let preview = document.querySelector("#preview");
+    let help_text = document.querySelector("#help").innerHTML;
+    preview.innerHTML = help_text
+        }
+  show_help()
+</script>
 
 </body>
 </html>

@@ -89,7 +89,7 @@ function highlight(text) {
   let reading_inner = /({rt})(.*?)({\/rt})/g
   
   // substitutions
-  let separator_sub = '<span class="bg-green-50 text-green-400">$1</span>'
+  let separator_sub = '<span class="bg-gray-100 text-gray-400">$1</span>'
 
   let ruby_phrase_sub = '<span class="rounded-full bg-purple-50">$1</span>'
   let ruby_inner_sub = '{rb}<span class="text-purple-800 bg-purple-100 rounded">$2</span>{rt}';
