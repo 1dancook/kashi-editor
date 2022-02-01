@@ -15,6 +15,8 @@ if __name__ == '__main__':
     window = webview.create_window(
             title,
             url="assets/kashiedit-html.html",
+            width=1000,
+            height=900,
             min_size=(800,600),
             )
 
