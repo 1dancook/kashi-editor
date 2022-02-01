@@ -48,3 +48,9 @@ There is an option selection menu for inserting separators in OpenLP syntax.
 `Alt+c` to insert a chorus line.
 
 `Alt+b` to insert a bridge separator.
+
+
+## Special Thanks
+
+- This project is using tailwindcss. Thank you to the folks at [tailwindcss.com](www.tailwindcss.com).
+- Credit to syntax highlighting idea from [css-tricks.com](https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/). I had to adapt that idea for this project but the initial help came from there. 
