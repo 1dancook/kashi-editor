@@ -94,10 +94,10 @@ function highlight(text) {
   let ruby_phrase_sub = '<span class="rounded-full bg-purple-50">$1</span>'
   let ruby_inner_sub = '{rb}<span class="text-purple-800 bg-purple-100 rounded">$2</span>{rt}';
   let reading_inner_sub = '{rt}<span class="text-blue-700 bg-blue-100 rounded">$2</span>{/rt}'  
-  let ruby_start_sub = '<span class="text-purple-200">{rb}</span>';
-  let ruby_stop_sub = '<span class="text-purple-200">{/rb}</span>';
-  let reading_start_sub = '<span class="text-blue-200">{rt}</span>';
-  let reading_stop_sub = '<span class="text-blue-200">{/rt}</span>';
+  let ruby_start_sub = '<span class="text-purple-300">{rb}</span>';
+  let ruby_stop_sub = '<span class="text-purple-300">{/rb}</span>';
+  let reading_start_sub = '<span class="text-blue-300">{rt}</span>';
+  let reading_stop_sub = '<span class="text-blue-300">{/rt}</span>';
 
   // replacements
   text = text.replace(separators, separator_sub)
