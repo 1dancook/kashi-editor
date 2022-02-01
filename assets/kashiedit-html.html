@@ -5,16 +5,19 @@
   <title>歌詞エディター</title>
   <link rel="stylesheet" type="text/css" href="kashiedit-css.css" />
   <link rel="stylesheet" type="text/css" href="tailwind.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 </head>
 
-<body class="overflow-hidden">
+<body class="overflow-hidden" style="font-family: 'Noto Sans JP', sans-serif;">
 
 <!-- EDITOR -->
 <div id="editor-container" class="fixed top-0 bottom-0 left-0 m-2 mb-16" style="width: calc(50vw - 12px)">
 
-<textarea placeholder="こちらで歌詞を編集する" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);" onchange="update(this.value);" class="absolute p-2 w-full h-full top-0 left-0 bottom-0 right-0 border border-gray-500 rounded overflow-auto break-all font-mono text-lg leading-7 z-10" style="resize:none; caret-color:black; color:transparent; background:transparent;"></textarea>
+<textarea placeholder="こちらで歌詞を編集する" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);" onchange="update(this.value);" class="absolute p-2 w-full h-full top-0 left-0 bottom-0 right-0 border border-gray-500 rounded overflow-auto break-all text-lg leading-7 z-10" style="resize:none; caret-color:black; color:transparent; background:transparent;"></textarea>
 
-<div id="highlighting" class="select-none absolute top-0 left-0 bottom-0 right-0 w-full h-full p-2 border border-gray-300 rounded overflow-auto break-all font-mono text-lg leading-7 z-0" aria-hidden="true">
+<div id="highlighting" class="select-none absolute top-0 left-0 bottom-0 right-0 w-full h-full p-2 border border-gray-300 rounded overflow-auto break-all text-lg leading-7 z-0" aria-hidden="true">
 </div>
 </div>
 
