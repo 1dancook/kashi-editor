@@ -4,6 +4,10 @@ This editor is for editing lyrics for use with OpenLP projection software. It is
 
 The GUI interface is in Japanese.
 
+## Screenshots
+
+![kashieditor](images/screenshot01.png)
+
 ## Installation
 
 Right now no binary file is available.
