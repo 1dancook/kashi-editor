@@ -10,7 +10,7 @@ Right now no binary file is available.
 
 ### Windows
 
-Requires python 3.8 for windows because of a dependency for pywebview.
+Requires python 3.8 for windows because of a dependency for pywebview. It seems that this can be resolved by first installing pybonnit independantly.
 
 - `pip install pywebview`
 - `pip install pywebview[cef]`
@@ -24,7 +24,10 @@ I am unsure if webview2 is required.
 ## Compilation
 
 ### Windows
-- will use pyinstaller
+- use pyinstaller
+- likely requires adding the pyinstaller hook manually to site packages from [here](https://github.com/cztomczak/cefpython/tree/master/examples/pyinstaller) and also modifing the hookspath in the `.spec` file: `hookspath=["."]` see [this issue](https://github.com/r0x0r/pywebview/issues/369)
+
+`pyinstaller --noconsole --onefile --add-data "assets/*;assets" kashiedit.py`
 
 ### Mac
 - can use py2app
@@ -33,21 +36,33 @@ I am unsure if webview2 is required.
 
 ## How to Use
 
+### Basic Usage
+
+1. Copy text from OpenLP
+2. Paste it into kashiedit
+3. After editing text, copy and paste it back into OpenLP
+
+### More info and Shortcut Keys
+
 Tags are configured to be like this:
 
 `{rb}KANJI{rt}READING{/rt}{/rb}`
 
-In OpenLP you must configure these formatting tags to be used. It is the same format as html but shortened for brevity. `<ruby>KANJI<rt>READING</rt></ruby>`
+In OpenLP you must configure these formatting tags to be used. It is the same format as html but shortened for brevity. `<ruby>KANJI<rt>READING</rt></ruby>`. Squiggly brackets are used by OpenLP.
 
-`Ctrl+R` will insert tags. If there is a selection it will use that for KANJI.
+`Ctrl+R` will insert tags. With no selection the cursor will be moved to the KANJI spot. If there is a selection it will use that for KANJI and automatically move the cursor to the READING spot.
 
 There is an option selection menu for inserting separators in OpenLP syntax.
 
-`Alt+v` to insert verse and auto increment the number.
+`Ctrl+1` to insert verse separator.
 
-`Alt+c` to insert a chorus line.
+`Ctrl+2` to insert a chorus separator.
 
-`Alt+b` to insert a bridge separator.
+`Ctrl+3` to insert a bridge separator.
+
+`Ctrl+u` will increment the number by 1.
+
+`Ctrl+d` will decrement the number by 1.
 
 
 ## Special Thanks
