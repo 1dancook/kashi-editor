@@ -7,45 +7,45 @@
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="overflow-hidden">
 
 <!-- EDITOR -->
-<div>
-  <textarea placeholder="歌詞エディター" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);" onchange="update(this.value);"></textarea>
+<div id="editor-container" class="fixed w-1/2 top-0 bottom-0 left-0 mb-14">
 
-<!--this must not have any white space before it or
-  it will be messed up in the editor -->
-<pre id="highlighting" aria-hidden="true">
-<code class="language-html" id="highlighting-content">
-</code>
-</pre>
+<textarea placeholder="こちらで歌詞を編集する" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);" onchange="update(this.value);" class="absolute top-0 left-0 bottom-0 right-0 m-2 p-2 border border-gray-500 rounded overflow-auto break-all font-mono text-lg leading-7 z-10" style="resize:none; caret-color:black; color:transparent; background:transparent;"></textarea>
+
+<div id="highlighting" class="select-none absolute top-0 left-0 bottom-0 right-0 m-2 p-2 border border-gray-300 rounded overflow-auto break-all font-mono text-lg leading-7 z-0" aria-hidden="true">
+</div>
 </div>
 
+
 <!--PREVIEW-->
-<div id="preview-container">
-  <div id="preview">
-    歌詞プレビュー
+<div id="preview-container" class="fixed w-1/2 top-0 bottom-0 right-0 mb-14">
+  <div id="preview" class="absolute top-0 bottom-0 right-0 left-0 m-2 p-2 border border-gray-300 rounded overflow-auto bg-gray-700 text-white">
+    プレビュー
   </div>
 </div>
 
 <!-- BUTTONS -->
-<div id="buttons-container" class="">
+<div id="buttons-container" class="m-2 absolute bottom-0 left-0 right-0 h-10 flex justify-start gap-4">
 
-  <button id="insert-tags" class="rounded-full bg-blue-600 text-white" onclick="insert_tags()">{rb}{rt}{/rt}{/rb}</button>
+  <button id="insert-tags" class="rounded h-8 px-2 bg-gray-100 border border-gray-200 hover:bg-gray-200" onclick="insert_tags()">{rb}{rt}{/rt}{/rb}</button>
   <!--<button id="" onclick="delete_tags()">タグを削除</button>-->
 
-  <select id="separator-select">
-    <option>バース</option>
-    <option>コーラス</option>
-    <option>ブリッジ</option>
-    <option>間奏</option>
-    <option>序奏</option>
-    <option>エンディング</option>
-  </select>
+  <div>
+    <select id="separator-select" class="rounded h-8 px-2 border border-gray-200">
+      <option>バース</option>
+      <option>コーラス</option>
+      <option>ブリッジ</option>
+      <option>間奏</option>
+      <option>序奏</option>
+      <option>エンディング</option>
+    </select>
 
-  <input id="sep-value-input" value=1></input>
+    <input id="sep-value-input" value=1 class="rounded h-8 px-2 border border-gray-200 w-10" ></input>
 
-  <button id="insert-sep-button" onclick="insert_sep()">入力</button>
+    <button id="insert-sep-button" onclick="insert_sep()" class="rounded h-8 px-2 bg-gray-100 border border-gray-200 hover:bg-gray-200">入力</button>
+  </div>
 
 
 </div>

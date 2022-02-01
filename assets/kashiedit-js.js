@@ -6,22 +6,22 @@ function update_preview() {
   let ruby_stop = /{\/rb}/g; // match {/rb}
   let reading_start = /{rt}/g; // match {rt}
   let reading_stop = /{\/rt}/g; // match {/rt}
-  let separators = /\n(---\[)(.*?)(\]---\s*\n)/g; // only if new line is also there
+  let separators = /(---\[)(.*?)(\]---\s*\n)/g; // only if new line is also there
   
   // substitutions
-  let ruby_start_sub = '<ruby>';
+  let ruby_start_sub = '<ruby class="rounded bg-gray-600 px-1">';
   let ruby_stop_sub = '</ruby>';
-  let reading_start_sub = '<rt>';
+  let reading_start_sub = '<rt class="text-green-300 text-sm">';
   let reading_stop_sub = '</rt>';
-  let separator_sub = '<br><p class="separator-preview">$2</p>'
+  let separator_sub = '<br><p class="block border-b-2 border-purple-500 text-gray-50 px-2 mt-4">$2</p>'
 
   // replacements
-  text = text.replaceAll(separators, separator_sub)
-  text = text.replaceAll(ruby_start, ruby_start_sub);
-  text = text.replaceAll(ruby_stop, ruby_stop_sub);
-  text = text.replaceAll(reading_start, reading_start_sub);
-  text = text.replaceAll(reading_stop, reading_stop_sub);
-  text = text.replaceAll(/\n/g, '<br>')
+  text = text.replace(separators, separator_sub)
+  text = text.replace(ruby_start, ruby_start_sub);
+  text = text.replace(ruby_stop, ruby_stop_sub);
+  text = text.replace(reading_start, reading_start_sub);
+  text = text.replace(reading_stop, reading_stop_sub);
+  text = text.replace(/\n/g, '<br>')
   
   let preview = document.querySelector("#preview");
   preview.innerHTML = text
@@ -29,28 +29,26 @@ function update_preview() {
 }
 
 
-function insert_sep() {
+function insert_separator_text(separator, n) {
   let editor = document.querySelector("#editing");
   let text = editor.value;
-  let separator = document.querySelector("#separator-select").value;
-  //let n = prompt("何番？", 1)
-  let n = 1
-  if (!n) {
-    editor.focus()
-    return;
-  }
   let insertion = "\n" + "---[" + separator + ":" + n + "]---\n";
-  
-  
   editor.focus()
   let sel_start = editor.selectionStart;
   let sel_end = editor.selectionEnd;
   let beginning = text.slice(0,sel_end);
   let end = text.slice(sel_end, text.length);
+  //TODO: this should ideally get to the eend of a line first and then insert
   
   editor.value = beginning + insertion + end;
   
   update(editor.value)
+}
+
+function insert_sep() {
+  let separator = document.querySelector("#separator-select").value;
+  let n = document.querySelector("#sep-value-input").value;
+  insert_separator_text(separator, n);
 }
 
 function insert_tags() {
@@ -91,44 +89,58 @@ function highlight(text) {
   let reading_inner = /({rt})(.*?)({\/rt})/g
   
   // substitutions
-  let separator_sub = '<span class="separator">$1</span>'
-  let ruby_phrase_sub = '<span class="rb-phrase">$1</span>'
-  let ruby_inner_sub = '{rb}<span class="rb-inner">$2</span>{rt}';
-  let reading_inner_sub = '{rt}<span class="rt-inner">$2</span>{/rt}'  
-  let ruby_start_sub = '<span class="rb">{rb}</span>';
-  let ruby_stop_sub = '<span class="rb">{/rb}</span>';
-  let reading_start_sub = '<span class="rt">{rt}</span>';
-  let reading_stop_sub = '<span class="rt">{/rt}</span>';
+  let separator_sub = '<span class="bg-green-50 text-green-400">$1</span>'
+
+  let ruby_phrase_sub = '<span class="rounded-full bg-purple-50">$1</span>'
+  let ruby_inner_sub = '{rb}<span class="text-purple-800 bg-purple-100 rounded">$2</span>{rt}';
+  let reading_inner_sub = '{rt}<span class="text-blue-700 bg-blue-100 rounded">$2</span>{/rt}'  
+  let ruby_start_sub = '<span class="text-purple-200">{rb}</span>';
+  let ruby_stop_sub = '<span class="text-purple-200">{/rb}</span>';
+  let reading_start_sub = '<span class="text-blue-200">{rt}</span>';
+  let reading_stop_sub = '<span class="text-blue-200">{/rt}</span>';
 
   // replacements
-  text = text.replaceAll(separators, separator_sub)
+  text = text.replace(separators, separator_sub)
   // must do the wrapping ones first
-  text = text.replaceAll(ruby_phrase, ruby_phrase_sub);
-  text = text.replaceAll(ruby_inner, ruby_inner_sub);  
-  text = text.replaceAll(reading_inner, reading_inner_sub);
+  text = text.replace(ruby_phrase, ruby_phrase_sub);
+  text = text.replace(ruby_inner, ruby_inner_sub);  
+  text = text.replace(reading_inner, reading_inner_sub);
   // then tags
-  text = text.replaceAll(ruby_start, ruby_start_sub);
-  text = text.replaceAll(ruby_stop, ruby_stop_sub);
-  text = text.replaceAll(reading_start, reading_start_sub);
-  text = text.replaceAll(reading_stop, reading_stop_sub);
+  text = text.replace(ruby_start, ruby_start_sub);
+  text = text.replace(ruby_stop, ruby_stop_sub);
+  text = text.replace(reading_start, reading_start_sub);
+  text = text.replace(reading_stop, reading_stop_sub);
+
+  text = text.replace(/\n/g, '<br>');
+
   return text;
-  
-
-
   
 }
 
+
+function add_new_line() {
+  let highlights = document.querySelector("#highlighting");
+  let newlines = document.querySelector("#newlines");
+  let text = highlights.innerHTML;
+  text = text.replace(/(.*?)<br>/g, '<span class="newline -m-4"></span><span style="color:transparent; background:transparent">$1</span><br>')
+  newlines.innerHTML = text
+}
+
 function update(text) {
-  let result_element = document.querySelector("#highlighting-content");
+  let result_element = document.querySelector("#highlighting");
   // Handle final newlines
+  //text = text.replace(/\n{1,200}$/, "")
+
   if(text[text.length-1] == "\n") {
-    text += " ";
+    text += "\n";
   }
   // Update code
   result_element.innerHTML = text.replace(new RegExp("&", "g"), "&amp;").replace(new RegExp("<", "g"), "&lt;"); /* Global RegExp */
   
   // Syntax Highlight
   result_element.innerHTML = highlight(text);
+
+  //add_new_line();
   
   // update preview window
   update_preview();
@@ -167,8 +179,34 @@ function enable_shortcut_keys() {
       if (event.ctrlKey && event.key === 'r') {
         insert_tags();
       }
+      if (event.ctrlKey && event.key === '1') {
+        let n = document.querySelector("#sep-value-input").value;
+        insert_separator_text("バース", n);
+      }
+      if (event.ctrlKey && event.key === '2') {
+        let n = document.querySelector("#sep-value-input").value;
+        insert_separator_text("コーラス", n);
+      }
+      if (event.ctrlKey && event.key === '3') {
+        let n = document.querySelector("#sep-value-input").value;
+        insert_separator_text("ブリッジ", n);
+      }
+      if (event.ctrlKey && event.key === 'u') {
+        let n = document.querySelector("#sep-value-input");
+        let a = parseInt(n.value) + 1
+        n.value = a
+      }
+      if (event.ctrlKey && event.key === 'd') {
+        let n = document.querySelector("#sep-value-input");
+        let a = parseInt(n.value) - 1
+        n.value = a
+        if (n.value <= 0) {
+          n.value = 1
+        }
+      }
   });
   
+
 }
 
 enable_shortcut_keys();
