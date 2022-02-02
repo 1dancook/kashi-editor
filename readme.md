@@ -69,6 +69,23 @@ There is an option selection menu for inserting separators in OpenLP syntax.
 `Ctrl+d` will decrement the number by 1.
 
 
+## Roadmap
+
+- [x] live preview
+- [x] syntax highlighting of tags
+- [x] insertion of tags
+- [x] insertion of song part separators
+- [x] basic keyboard shortcuts
+- [ ] improvement: song part separators should always go on a new line (not in middle of lyrics)
+- [ ] code improvement: refactor javascript functions into python api
+- [ ] map tab / shift+tab to navigate through kanji and readings quickly
+- [ ] smart deletion of tags (cursor is in a tag set, delete that set but just leave the kanji)
+- [ ] button to remove all tags (but leave all kanji/words)
+- [ ] button to auto add tags for all kanji (with no readings)
+- [ ] button for auto tagging all kanji and insert the readings (using sudachipy)
+- [ ] UI: show/hide preview button
+- [ ] UI: handle to horizontally resize the editor/preview split
+
 ## Special Thanks
 
 - This project is using tailwindcss. Thank you to the folks at [tailwindcss.com](www.tailwindcss.com).
